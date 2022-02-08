@@ -1,7 +1,7 @@
 ## :wave: Olá. eu sou o João Pedro.
 
 - 🔭 Estou atualmente aprimorando minhas habilidades em Flutter e Dart.
-- 🌱 Atualmente estudando React.
+- 🌱 Atualmente estudando React e desenvolvimento de jogos com pygame.
 
 - :computer: Trabalhano na **DTI Digital** como desenvolvedor Flutter.
 
