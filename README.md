@@ -2,9 +2,7 @@
 
 - 🔭 Estou atualmente aprimorando minhas habilidades em Flutter e Dart.
 - 🌱 Atualmente estudando React e Flutter.
-- 
 
-- :computer: Trabalhano na **DTI Digital** como desenvolvedor Flutter.
 
 <div align="center">
   <a href="https://github.com/JoaoRafa19">
