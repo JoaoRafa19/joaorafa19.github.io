@@ -51,7 +51,7 @@ class Readme extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Image.asset(
-                "images/pato.gif",
+                "assets/images/pato.gif",
                 height: 100,
                 width: 100,
               ),
