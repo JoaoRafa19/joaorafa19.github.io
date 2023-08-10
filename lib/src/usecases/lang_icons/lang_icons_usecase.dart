@@ -5,8 +5,8 @@ import 'package:portifolio/utils/repository_factory.dart';
 class LangIconsUsecase {
   late LangIconsRepository _langIconsRepository;
 
-  LangIconsUsecase(RepositoryFactory _factory) {
-    _langIconsRepository = _factory.langIconsRepository;
+  LangIconsUsecase(RepositoryFactory factory) {
+    _langIconsRepository = factory.langIconsRepository;
   }
 
   Future<List<String>> execute(List<Project> projects) async {

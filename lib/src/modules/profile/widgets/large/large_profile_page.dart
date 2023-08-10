@@ -200,29 +200,29 @@ class _ProfilePictureState extends State<ProfilePicture> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
+    return MouseRegion(
+      onEnter: hover,
+      onExit: hover,
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(255),
+                border: Border.all(
+                    color: AppColors.borderGrey,
+                    style: BorderStyle.solid,
+                    width: 2)),
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(255),
-              border: Border.all(
-                  color: AppColors.borderGrey,
-                  style: BorderStyle.solid,
-                  width: 2)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(255),
-            child: Image.network(
-              "https://avatars.githubusercontent.com/u/50741246?v=4",
-              height: 350,
+              child: Image.network(
+                "https://avatars.githubusercontent.com/u/50741246?v=4",
+                height: 350,
+              ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: 25,
-          right: 10,
-          child: MouseRegion(
-            onEnter: hover,
-            onExit: hover,
+          Positioned(
+            bottom: 25,
+            right: 10,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeInOut,
@@ -261,8 +261,8 @@ class _ProfilePictureState extends State<ProfilePicture> {
                     ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

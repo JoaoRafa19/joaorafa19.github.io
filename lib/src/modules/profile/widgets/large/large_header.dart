@@ -29,8 +29,10 @@ class LargeHeader extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(1),
+              
               child: SvgPicture.asset(
                 "images/github-mark.svg",
+                // ignore: deprecated_member_use
                 color: Colors.white.withAlpha(255),
                 height: 50,
                 width: 50,

@@ -5,7 +5,7 @@ class LangIconsRepository extends GetConnect {
     try {
       final langIcon = lang.toLowerCase();
       final icon =
-          "https://cdn.jsdelivr.net/npm/programming-languages-logos/src/$lang/${lang}.png";
+          "https://cdn.jsdelivr.net/npm/programming-languages-logos/src/$langIcon/$langIcon.png";
 
       return icon;
     } catch (e) {

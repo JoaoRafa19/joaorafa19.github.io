@@ -86,7 +86,7 @@ class Readme extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Ask(context),
+              ask(context),
             ],
           ),
         ),
@@ -94,7 +94,7 @@ class Readme extends StatelessWidget {
     );
   }
 
-  Container Ask(BuildContext context) {
+  Container ask(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(

@@ -18,7 +18,7 @@ class ProfileController extends GetxController {
 
   final RxList<String> _langIcons = RxList<String>([]);
 
-  List<String> get langIcons => _langIcons.value;
+  List<String> get langIcons => _langIcons;
 
   final projects = [].obs;
 
@@ -29,7 +29,7 @@ class ProfileController extends GetxController {
     final lastProjects =
         await _githubProjectsUsecase.execute(lastProjectsLimit: 5);
 
-    final _langIcons_ = await _langIconsUsecase.execute(lastProjects);
-    this._langIcons.value = _langIcons_;
+    final langIcons_ = await _langIconsUsecase.execute(lastProjects);
+    _langIcons.value = langIcons_;
   }
 }

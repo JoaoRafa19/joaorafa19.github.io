@@ -31,8 +31,7 @@ class ReadmeBadge extends StatelessWidget {
           ),
           Text(
             text,
-            style:
-                TextStyle(color: AppColors.white, fontWeight: FontWeight.w400),
+            style: Theme.of(context).textTheme.bodyMedium,
           )
         ],
       ),
