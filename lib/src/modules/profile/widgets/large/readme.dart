@@ -50,8 +50,8 @@ class Readme extends StatelessWidget {
                 "Software Developer",
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              Image.asset(
-                "assets/images/pato.gif",
+              Image.network(
+                "https://raw.githubusercontent.com/JoaoRafa19/joaorafa19.github.io/main/assets/assets/images/pato.gif",
                 height: 100,
                 width: 100,
               ),
