@@ -11,8 +11,12 @@ class GithubProjectsUsecase {
     _repository = repositoryFactory.githubProjectsRepository;
   }
 
-  Future<List<Project>> execute() async {
+  Future<List<Project>> execute({int? lastProjectsLimit}) async {
     try {
+      if (lastProjectsLimit != null) {
+        final projects = await _repository.lastProjects();
+        return projects.sublist(0, lastProjectsLimit);
+      }
       final projects = await _repository.getProjects();
       return projects;
     } on Exception catch (e) {

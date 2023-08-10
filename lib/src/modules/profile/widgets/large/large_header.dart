@@ -11,7 +11,7 @@ class LargeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppStyle.headerBlack),
+      decoration: const BoxDecoration(color: AppColors.headerBlack),
       height: 70,
       alignment: Alignment.topCenter,
       padding: const EdgeInsets.only(top: 5, bottom: 12, left: 10, right: 20),
@@ -64,7 +64,7 @@ class LargeHeader extends StatelessWidget {
                     enabled: false,
                     enabledBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    hintText: "Type / to search",
+                    hintText: "Clone made with Flutter",
                     icon: Icon(
                       Icons.search_outlined,
                       color: Colors.grey[700],

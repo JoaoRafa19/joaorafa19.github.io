@@ -10,17 +10,17 @@ class ReadmeHeaderName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
+        const Text(
           "JoaoRafa19",
-          style: TextStyle(color: AppStyle.white),
+          style: TextStyle(color: AppColors.white),
         ),
         Text(
           "/",
           style: TextStyle(color: Colors.grey[700]),
         ),
-        Text(
+        const Text(
           "README",
-          style: TextStyle(color: AppStyle.white),
+          style: TextStyle(color: AppColors.white),
         ),
         Text(
           ".md",

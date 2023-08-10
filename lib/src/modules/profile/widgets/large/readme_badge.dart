@@ -27,16 +27,15 @@ class ReadmeBadge extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: AppStyle.white,
+            color: AppColors.white,
           ),
           Text(
             text,
             style:
-                TextStyle(color: AppStyle.white, fontWeight: FontWeight.w400),
+                TextStyle(color: AppColors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
     );
   }
 }
-

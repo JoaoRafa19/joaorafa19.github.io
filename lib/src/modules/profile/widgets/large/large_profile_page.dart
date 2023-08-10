@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:file_icon/file_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:portifolio/src/modules/profile/readme_header_name.dart';
+import 'package:get/get.dart';
+import 'package:portifolio/src/modules/profile/profile_controller.dart';
 import 'package:portifolio/src/modules/profile/widgets/badge.dart';
-import 'package:portifolio/src/modules/profile/widgets/current_projects.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/large_header.dart';
-import 'package:portifolio/src/modules/profile/widgets/large/readme_badge.dart';
+import 'package:portifolio/src/modules/profile/widgets/large/readme.dart';
 import 'package:portifolio/utils/style.dart';
 
 class LargeProfilePage extends StatelessWidget {
@@ -15,25 +16,13 @@ class LargeProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppStyle.bodyBlack,
+      backgroundColor: AppColors.bodyBlack,
       body: SingleChildScrollView(
         child: Column(
           children: [
             const LargeHeader(),
             _headerBottom(),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Readme(), // Readme
-                    ],
-                  )
-                ],
-              ),
-            ),
+            const LargeBody(),
           ],
         ),
       ),
@@ -43,7 +32,7 @@ class LargeProfilePage extends StatelessWidget {
   Container _headerBottom() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(color: AppStyle.headerBlack),
+      decoration: const BoxDecoration(color: AppColors.headerBlack),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -74,116 +63,204 @@ class LargeProfilePage extends StatelessWidget {
   }
 }
 
-class Readme extends StatelessWidget {
-  Readme({
+class LargeBody extends StatelessWidget {
+  const LargeBody({
     super.key,
   });
-  final controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.vertical,
-      mainAxisSize: MainAxisSize.max,
+    return Padding(
+      padding: const EdgeInsets.only(top: 40, bottom: 50),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                PersonalInformation(),
+                Readme(), // Readme
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PersonalInformation extends StatelessWidget {
+  PersonalInformation({
+    super.key,
+  });
+
+  final controller = Get.find<ProfileController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.05),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const ProfilePicture(),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Joao Pedro Rafael",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  "JoaoRafa19",
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FilledButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(0),
+                        // minimumSize: MaterialStateProperty.all(
+                        //     const Size(double.infinity, 40)),
+                        textStyle: MaterialStateProperty.resolveWith(
+                          (states) {
+                            if (states.contains(MaterialState.hovered)) {
+                              return Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(color: AppColors.bodyBlack);
+                            }
+                            return Theme.of(context).textTheme.displayMedium;
+                          },
+                        ),
+                        backgroundColor:
+                            MaterialStateColor.resolveWith((states) {
+                          if (states.contains(MaterialState.hovered)) {
+                            return AppColors.lightGrey;
+                          }
+                          return AppColors.borderGrey;
+                        }),
+                      ),
+                      child: const Text("Follow"),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfilePicture extends StatefulWidget {
+  const ProfilePicture({
+    super.key,
+  });
+
+  @override
+  State<ProfilePicture> createState() => _ProfilePictureState();
+}
+
+class _ProfilePictureState extends State<ProfilePicture> {
+  bool isHover = false;
+  bool renderVisible = false;
+  final controller = Get.find<ProfileController>();
+
+  void hover(event) {
+    setState(() {
+      isHover = !isHover;
+    });
+  }
+
+  final List<String> _languageIcons = [];
+
+  @override
+  void initState() {
+    _languageIcons.addAll(controller.langIcons);
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
       children: [
         Container(
           decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-              border: Border.all(color: AppStyle.borderGrey)),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ReadmeHeaderName(),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Joao Pedro Rafael",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: AppStyle.white,
-                ),
-              ),
-              const Divider(
-                color: Colors.white,
-                height: 25,
-                thickness: 2,
-                indent: 5,
-                endIndent: 5,
-              ),
-              contactRow(),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Software Developer",
-                style: TextStyle(
-                    color: AppStyle.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
-              ),
-              Image.asset(
-                "images/pato.gif",
-                height: 100,
-                width: 100,
-              ),
-              const Divider(
-                thickness: 10,
-                color: Colors.white,
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.ac_unit,
-                    color: Colors.blue[300],
-                  ),
-                  Text(
-                    "Current Personal Projects:",
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: AppStyle.white,
-                        ),
-                  ),
-                ],
-              ),
-              const Divider(
-                thickness: 10,
-                color: Colors.white,
-                height: 10,
-              ),
-              const CurrentProjects(projectName: "Backend Go"),
-              const CurrentProjects(projectName: "Websockets Api"),
-              const CurrentProjects(projectName: "Flutter Frontend"),
-              const CurrentProjects(projectName: "React Frontend"),
-            ],
+              borderRadius: BorderRadius.circular(255),
+              border: Border.all(
+                  color: AppColors.borderGrey,
+                  style: BorderStyle.solid,
+                  width: 2)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(255),
+            child: Image.network(
+              "https://avatars.githubusercontent.com/u/50741246?v=4",
+              height: 350,
+            ),
           ),
         ),
-      ],
-    );
-  }
-
-  Row contactRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        ReadmeBadge(
-          backgroundColor: Colors.blue[900]!,
-          text: "Connect",
-          icon: Icons.work_outline,
-        ),
-        ReadmeBadge(
-          backgroundColor: Colors.red[600]!,
-          text: "Contact-me!",
-          icon: Icons.email_outlined,
-        ),
-        const ReadmeBadge(
-          backgroundColor: Colors.black,
-          text: "DEV.to",
-          icon: Icons.logo_dev_outlined,
+        Positioned(
+          bottom: 25,
+          right: 10,
+          child: MouseRegion(
+            onEnter: hover,
+            onExit: hover,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeInOut,
+              height: 50,
+              onEnd: () {
+                setState(() {
+                  renderVisible = isHover;
+                });
+              },
+              width: isHover ? 160 : 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(255),
+                color: AppColors.bodyBlack,
+                border: Border.all(
+                    color: AppColors.borderGrey,
+                    style: BorderStyle.solid,
+                    width: 2),
+              ),
+              child: isHover && renderVisible
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FileIcon("main.dart"),
+                        FileIcon("main.go"),
+                        FileIcon("main.c"),
+                        FileIcon("main.ts"),
+                      ],
+                    )
+                  : const Center(
+                      child: Text(
+                        "BR",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+            ),
+          ),
         ),
       ],
     );

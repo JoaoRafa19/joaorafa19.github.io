@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:portifolio/utils/style.dart';
 
@@ -19,18 +18,21 @@ class CurrentProjects extends StatelessWidget {
         spacing: 5,
         runAlignment: WrapAlignment.center,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 5,
-            foregroundColor: AppStyle.headerBlack,
-            backgroundColor: AppStyle.headerBlack,
+            foregroundColor: AppColors.headerBlack,
+            backgroundColor: AppColors.headerBlack,
+            child: CircleAvatar(
+              radius: 3,
+              backgroundColor: AppColors.white,
+            ),
           ),
           Text(
             projectName,
-            style: const TextStyle(color: Colors.white),
+            style: Theme.of(context).textTheme.bodyMedium,
           )
         ],
       ),
     );
   }
 }
-

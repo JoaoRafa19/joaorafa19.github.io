@@ -40,6 +40,7 @@ dependencies:
   flutter_bloc: 
   get: ^4.6.5
   flutter_markdown: ^0.6.17+1
+  file_icon: ^1.0.0
 
 dev_dependencies:
   flutter_test:

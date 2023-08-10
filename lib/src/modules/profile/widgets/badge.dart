@@ -51,8 +51,8 @@ class HeaderBadge extends StatelessWidget {
                   !ResponsiveWidget.isSmallScreen(context)
                       ? Text(
                           name,
-                          style: TextStyle(
-                            color: AppStyle.white,
+                          style: const TextStyle(
+                            color: AppColors.white,
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
                           ),

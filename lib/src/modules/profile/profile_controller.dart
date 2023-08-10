@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:portifolio/src/usecases/githubprojects/github_projects_usecase.dart';
+import 'package:portifolio/src/usecases/lang_icons/lang_icons_usecase.dart';
 
 class ProfileController extends GetxController {
   final GithubProjectsUsecase _githubProjectsUsecase =
       Get.find<GithubProjectsUsecase>();
+
+  final LangIconsUsecase _langIconsUsecase = Get.find<LangIconsUsecase>();
 
   ProfileController();
 
@@ -13,10 +16,20 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
+  final RxList<String> _langIcons = RxList<String>([]);
+
+  List<String> get langIcons => _langIcons.value;
+
   final projects = [].obs;
 
   Future getProjects() async {
-    var projects = await _githubProjectsUsecase.execute();
+    final projects = await _githubProjectsUsecase.execute();
     this.projects.value = projects;
+
+    final lastProjects =
+        await _githubProjectsUsecase.execute(lastProjectsLimit: 5);
+
+    final _langIcons_ = await _langIconsUsecase.execute(lastProjects);
+    this._langIcons.value = _langIcons_;
   }
 }
