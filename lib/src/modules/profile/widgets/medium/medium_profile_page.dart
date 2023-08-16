@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class MediumProfilePage extends StatelessWidget {
@@ -8,6 +7,6 @@ class MediumProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Center(child: Text("Medium"));
   }
 }
