@@ -9,14 +9,14 @@ import 'package:portifolio/widgets/responsive_widget.dart';
 class ProfilePage extends GetView<ProfileController> {
   const ProfilePage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return const ResponsiveWidget(
-      smallScreen: SmallProfilePage(),
-      mediumScreen: MediumProfilePage(),
-      largeScreen: LargeProfilePage(),
+    return ResponsiveWidget(
+      smallScreen: const SmallProfilePage(),
+      mediumScreen: const MediumProfilePage(),
+      largeScreen: LargeProfilePage(
+        langIcons: controller.langIcons,
+      ),
     );
   }
 }
-
