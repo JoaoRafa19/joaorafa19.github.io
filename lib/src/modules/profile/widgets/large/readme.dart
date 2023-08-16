@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_highlighter/flutter_highlighter.dart';
+import 'package:flutter_highlighter/themes/atom-one-dark-reasonable.dart';
 import 'package:portifolio/src/modules/profile/readme_header_name.dart';
 import 'package:portifolio/src/modules/profile/widgets/current_projects.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/readme_badge.dart';
@@ -8,7 +10,54 @@ class Readme extends StatelessWidget {
   Readme({
     super.key,
   });
+
+  static const _code = """
+class Joao extends Human {
+  late final String? nationality;
+  late final String? localization;
+
+  @override
+  Joao(String name, {String? nationality, String? localization}) : super(name) {
+    nationality ??= "Brazilian";
+    localization ??= "Belo Horizonte, MG";
+  }
+
+  final List<String> languages = [
+    "Portuguese",
+    "English",
+  ];
+
+  final Map<String, dynamic> technologies = {
+    "Flutter": ["GetX", "Provider", "MobX", "Bloc"],
+    "GoLang": ["GinGonic", "gorm"],
+    "Dart": ["Shelf", "Dio"],
+    "JavaScript": ["React.js", "Express"],
+    "Python": ["Django", "Flask", "Qt", "Pygame"],
+  };
+
+  final Map<String, dynamic> databases = {
+    "SQL": ["PostgreSQL", "MySQL", "SQLite"],
+    "NoSQL": ["MongoDB", "Redis"],
+  };
+
+  String getTechologies(String stack) {
+    switch (stack) {
+      case "Flutter":
+        return "GetX, Provider, MobX, Bloc, Firebase, Supabase, Dio";
+      case "Frontend":
+        return "Flutter, React.js, Tailwind";
+      case "Backend":
+        return "GoLang, Django, Flask, Node.js, Shelf";
+      case "Mobile":
+        return "Flutter";
+    }
+    return technologies[Random().nextInt(10)];
+  }
+}
+""";
+
   final controller = ScrollController();
+  final markdowncontroller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Flex(
@@ -24,7 +73,6 @@ class Readme extends StatelessWidget {
               border: Border.all(color: AppColors.borderGrey)),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ReadmeHeaderName(),
@@ -59,6 +107,22 @@ class Readme extends StatelessWidget {
                 thickness: 10,
                 color: Colors.white,
                 height: 10,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: HighlightView(
+                  _code,
+                  language: 'dart',
+                  tabSize: 8,
+                  theme: atomOneDarkReasonableTheme,
+                  padding: const EdgeInsets.all(12),
+                  textStyle: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Row(
                 children: [
