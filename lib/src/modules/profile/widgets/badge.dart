@@ -8,11 +8,13 @@ class HeaderBadge extends StatelessWidget {
     required this.name,
     required this.icon,
     this.isActive = false,
+    this.onTap,
   });
 
   final String name;
   final bool? isActive;
   final IconData icon;
+  final VoidCallback? onTap;
   final GlobalKey _key = GlobalKey();
 
   @override
@@ -22,48 +24,51 @@ class HeaderBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          margin: const EdgeInsets.only(
-            top: 10,
-            left: 10,
-            right: 10,
-            bottom: 10,
-          ),
-          padding: const EdgeInsets.only(
-            top: 5,
-            left: 5,
-            right: 5,
-            bottom: 5,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Icon(
-                      icon,
-                      color: Colors.grey[700],
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            margin: const EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: 10,
+            ),
+            padding: const EdgeInsets.only(
+              top: 5,
+              left: 5,
+              right: 5,
+              bottom: 5,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Icon(
+                        icon,
+                        color: Colors.grey[700],
+                      ),
                     ),
-                  ),
-                  !ResponsiveWidget.isSmallScreen(context)
-                      ? Text(
-                          name,
-                          style: const TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                    !ResponsiveWidget.isSmallScreen(context)
+                        ? Text(
+                            name,
+                            style: const TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.zero,
+                            padding: EdgeInsets.zero,
                           ),
-                        )
-                      : Container(
-                          margin: EdgeInsets.zero,
-                          padding: EdgeInsets.zero,
-                        ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

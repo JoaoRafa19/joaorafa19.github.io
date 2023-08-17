@@ -29,13 +29,11 @@ class LargeHeader extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(1),
-              
-              child: SvgPicture.network(
-"https://raw.githubusercontent.com/JoaoRafa19/joaorafa19.github.io/72630cc615fb0e7ab1993e91a0d02b077362b5ed/assets/assets/images/github-mark.svg",                // ignore: deprecated_member_use
-                color: Colors.white.withAlpha(255),
-                height: 50,
-                width: 50,
-                fit: BoxFit.contain,
+              child: const FadeInImage(
+                placeholder: AssetImage('assets/images/github-mark.png'),
+                image: NetworkImage(
+                  "https://raw.githubusercontent.com/JoaoRafa19/joaorafa19.github.io/72630cc615fb0e7ab1993e91a0d02b077362b5ed/assets/assets/images/github-mark.svg", // ignore: deprecated_member_use
+                ),
               ),
             ),
             const Text(
@@ -46,14 +44,6 @@ class LargeHeader extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            // VV Header content
-            /* 
-              Barra de pesquisa
-              Cria repo
-              Fork
-              Repositorios
-              Foto
-            */
             HeaderBorder(
               margin: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
               child: SizedBox(
@@ -138,12 +128,19 @@ class LargeHeader extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.network(
-                "https://avatars.githubusercontent.com/u/50741246?v=4",
-                height: 50,
-                fit: BoxFit.fill,
+            Container(
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(1),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: const FadeInImage(
+                  height: 50,
+                  fit: BoxFit.fill,
+                  placeholder: AssetImage('assets/images/github-mark.png'),
+                  image: NetworkImage(
+                    "https://raw.githubusercontent.com/JoaoRafa19/joaorafa19.github.io/72630cc615fb0e7ab1993e91a0d02b077362b5ed/assets/assets/images/github-mark.svg", // ignore: deprecated_member_use
+                  ),
+                ),
               ),
             ),
           ],

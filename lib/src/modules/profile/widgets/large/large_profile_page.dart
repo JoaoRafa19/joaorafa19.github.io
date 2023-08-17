@@ -1,25 +1,38 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:portifolio/src/models/github_project_model.dart';
 import 'package:portifolio/src/modules/profile/widgets/badge.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/large_header.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/personal_information.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/readme.dart';
 import 'package:portifolio/utils/style.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LargeProfilePage extends StatelessWidget {
-  const LargeProfilePage({super.key, required this.langIcons});
+  LargeProfilePage(
+      {super.key, required this.langIcons, required this.projects});
   final List<String> langIcons;
+  final List<Project> projects;
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bodyBlack,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             const LargeHeader(),
             _headerBottom(),
-            LargeBody(langIcons: langIcons),
+            LargeBody(
+              langIcons: langIcons,
+              projects: projects,
+            ),
           ],
         ),
       ),
@@ -36,15 +49,33 @@ class LargeProfilePage extends StatelessWidget {
           HeaderBadge(
             icon: Icons.menu_book_outlined,
             name: "Overview",
+            onTap: () {
+              _scrollController.animateTo(
+                  MediaQuery.of(Get.context!).size.height / 2,
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeIn);
+            },
             isActive: true,
           ),
           HeaderBadge(
             icon: Icons.book_outlined,
             name: "Repository",
+            onTap: () {
+              _scrollController.animateTo(
+                  MediaQuery.of(Get.context!).size.height + 100,
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeIn);
+            },
           ),
           HeaderBadge(
             icon: Icons.code_sharp,
             name: "Projects",
+            onTap: () {
+              _scrollController.animateTo(
+                  MediaQuery.of(Get.context!).size.height / 2,
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeIn);
+            },
           ),
           HeaderBadge(
             icon: Icons.folder_outlined,
@@ -61,11 +92,9 @@ class LargeProfilePage extends StatelessWidget {
 }
 
 class LargeBody extends StatelessWidget {
-  const LargeBody({
-    super.key,
-    required this.langIcons,
-  });
+  const LargeBody({super.key, required this.langIcons, required this.projects});
   final List<String> langIcons;
+  final List<Project> projects;
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +111,149 @@ class LargeBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 PersonalInformation(langIcons: langIcons),
-                Readme(), // Readme
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Readme(),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text("Pinned"),
+                    PinnedProjects(projects: projects)
+                  ],
+                ), // Readme
               ],
             ),
-            const SizedBox(
-              height: 24,
-            )
           ],
         ),
       ),
+    );
+  }
+}
+
+class PinnedProjects extends StatelessWidget {
+  const PinnedProjects({
+    super.key,
+    required this.projects,
+  });
+
+  final List<Project> projects;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 2.8,
+          ),
+          itemCount: projects.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () => launch(projects[index].url),
+              child: Container(
+                margin: EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.borderGrey,
+                    style: BorderStyle.solid,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.book_outlined,
+                            color: AppColors.lightGrey,
+                          ),
+                          const SizedBox(width: 5),
+                          Link(
+                              uri: Uri.parse(projects[index].url),
+                              builder: (BuildContext context,
+                                      FollowLink? followLink) =>
+                                  TextButton(
+                                    onPressed: () =>
+                                        launch(projects[index].url),
+                                    child: Text(
+                                      projects[index].name,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: true,
+                                      textWidthBasis: TextWidthBasis.parent,
+                                      strutStyle: StrutStyle(
+                                        fontSize: 12,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  )),
+                          const SizedBox(width: 5),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 1),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.borderGrey,
+                                  style: BorderStyle.solid,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(50)),
+                            child: Text(
+                              "Public",
+                              style: AppTheme.textTheme.bodySmall,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      projects[index].description ?? "",
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: AppColors.lightGrey,
+                          ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Expanded(child: Container()),
+                    projects[index].language.isNotEmpty
+                        ? Row(
+                            children: [
+                              SvgPicture.network(
+                                "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${projects[index].language.toLowerCase()}/${projects[index].language.toLowerCase()}-original.svg", // ignore: deprecated_member_use
+                                height: 24,
+                                allowDrawingOutsideViewBox: true,
+                                fit: BoxFit.contain,
+
+                                placeholderBuilder: (context) =>
+                                    CircularProgressIndicator(),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                projects[index].language,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      color: AppColors.lightGrey,
+                                    ),
+                              ),
+                            ],
+                          )
+                        : Container(),
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }

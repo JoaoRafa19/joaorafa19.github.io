@@ -40,6 +40,6 @@ class AppTheme extends Theme {
     bodyMedium: TextStyle(
         color: AppColors.white, fontSize: 14, fontWeight: FontWeight.w400),
     bodySmall: TextStyle(
-        color: AppColors.white, fontSize: 12, fontWeight: FontWeight.w400),
+        color: AppColors.lightGrey, fontSize: 12, fontWeight: FontWeight.w600),
   );
 }

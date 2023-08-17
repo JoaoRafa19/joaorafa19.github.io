@@ -14,9 +14,10 @@ class ProfilePage extends GetView<ProfileController> {
     return ResponsiveWidget(
       smallScreen: const SmallProfilePage(),
       mediumScreen: const MediumProfilePage(),
-      largeScreen: LargeProfilePage(
-        langIcons: controller.langIcons,
-      ),
+      largeScreen: Obx(() => LargeProfilePage(
+            projects: controller.projects.value,
+            langIcons: controller.langIcons.value,
+          )),
     );
   }
 }
