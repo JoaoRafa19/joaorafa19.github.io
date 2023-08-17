@@ -118,7 +118,10 @@ class LargeBody extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    const Text("Pinned"),
+                    Text(
+                      "Pinned",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     PinnedProjects(projects: projects)
                   ],
                 ), // Readme

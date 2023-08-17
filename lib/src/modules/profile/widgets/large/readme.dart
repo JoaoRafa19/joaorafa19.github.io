@@ -65,6 +65,7 @@ class Joao extends Human {
       mainAxisSize: MainAxisSize.max,
       children: [
         Container(
+          width: MediaQuery.of(context).size.width * 0.5,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(
@@ -86,7 +87,7 @@ class Joao extends Human {
               const Divider(
                 color: Colors.white,
                 height: 25,
-                thickness: 2,
+                thickness: 1,
                 indent: 5,
                 endIndent: 5,
               ),
@@ -98,15 +99,20 @@ class Joao extends Human {
                 "Software Developer",
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              const SizedBox(
+                height: 30,
+              ),
               Image.network(
                 "https://raw.githubusercontent.com/JoaoRafa19/joaorafa19.github.io/main/assets/assets/images/pato.gif",
                 height: 100,
                 width: 100,
               ),
               const Divider(
-                thickness: 10,
                 color: Colors.white,
-                height: 10,
+                height: 25,
+                thickness: 1,
+                indent: 5,
+                endIndent: 5,
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -139,9 +145,11 @@ class Joao extends Human {
                 ],
               ),
               const Divider(
-                thickness: 10,
                 color: Colors.white,
-                height: 10,
+                height: 25,
+                thickness: 1,
+                indent: 5,
+                endIndent: 5,
               ),
               const CurrentProjects(projectName: "Backend Go"),
               const CurrentProjects(projectName: "Websockets Api"),
@@ -187,7 +195,7 @@ class Joao extends Human {
 
   Row contactRow() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ReadmeBadge(
           backgroundColor: Colors.blue[900]!,
