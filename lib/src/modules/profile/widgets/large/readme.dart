@@ -5,6 +5,8 @@ import 'package:portifolio/src/modules/profile/readme_header_name.dart';
 import 'package:portifolio/src/modules/profile/widgets/current_projects.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/readme_badge.dart';
 import 'package:portifolio/utils/style.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Readme extends StatelessWidget {
   Readme({
@@ -197,21 +199,58 @@ class Joao extends Human {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ReadmeBadge(
-          backgroundColor: Colors.blue[900]!,
-          text: "Connect",
-          icon: Icons.work_outline,
-        ),
-        ReadmeBadge(
-          backgroundColor: Colors.red[600]!,
-          text: "Contact-me!",
-          icon: Icons.email_outlined,
-        ),
-        const ReadmeBadge(
-          backgroundColor: Colors.black,
-          text: "DEV.to",
-          icon: Icons.logo_dev_outlined,
-        ),
+        Link(
+            uri: Uri.parse("https://www.linkedin.com/in/joaopedrorafael/"),
+            builder: (context, lauch) {
+              return TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue[900]),
+                ),
+                onPressed: () {
+                  launchUrl(Uri.parse(
+                      "https://www.linkedin.com/in/joaopedrorafael/"));
+                },
+                child: ReadmeBadge(
+                  backgroundColor: Colors.blue[900]!,
+                  text: "Connect",
+                  icon: Icons.work_outline,
+                ),
+              );
+            }),
+        Link(
+            uri: Uri.parse("mailto:joaopedrorafael19@gmail.com"),
+            builder: (context, lauch) {
+              return TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red[600]!),
+                ),
+                onPressed: () {
+                  launchUrl(Uri.parse("mailto:joaopedrorafael19@gmail.com"));
+                },
+                child: ReadmeBadge(
+                  backgroundColor: Colors.red[600]!,
+                  text: "Contact-me!",
+                  icon: Icons.email_outlined,
+                ),
+              );
+            }),
+        Link(
+            uri: Uri.parse("https://dev.to/joaorafa19"),
+            builder: (context, lauch) {
+              return TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                ),
+                onPressed: () {
+                  launchUrl(Uri.parse("https://dev.to/joaorafa19"));
+                },
+                child: const ReadmeBadge(
+                  backgroundColor: Colors.black,
+                  text: "DEV.to",
+                  icon: Icons.logo_dev_outlined,
+                ),
+              );
+            }),
       ],
     );
   }
