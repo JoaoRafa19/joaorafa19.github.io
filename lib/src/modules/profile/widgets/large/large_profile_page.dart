@@ -19,6 +19,10 @@ class LargeProfilePage extends StatelessWidget {
 
   final ScrollController _scrollController = ScrollController();
 
+  var overview = GlobalKey();
+  var repository = GlobalKey();
+  var project = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +34,9 @@ class LargeProfilePage extends StatelessWidget {
             const LargeHeader(),
             _headerBottom(),
             LargeBody(
+              overviewKey: overview,
+              repositoryKey: repository,
+              projectKey: project,
               langIcons: langIcons,
               projects: projects,
             ),
@@ -50,10 +57,8 @@ class LargeProfilePage extends StatelessWidget {
             icon: Icons.menu_book_outlined,
             name: "Overview",
             onTap: () {
-              _scrollController.animateTo(
-                  MediaQuery.of(Get.context!).size.height / 2,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.easeIn);
+              Scrollable.ensureVisible(overview.currentContext!,
+                  duration: const Duration(seconds: 1), curve: Curves.easeIn);
             },
             isActive: true,
           ),
@@ -61,20 +66,16 @@ class LargeProfilePage extends StatelessWidget {
             icon: Icons.book_outlined,
             name: "Repository",
             onTap: () {
-              _scrollController.animateTo(
-                  MediaQuery.of(Get.context!).size.height + 100,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.easeIn);
+              Scrollable.ensureVisible(project.currentContext!,
+                  duration: const Duration(seconds: 1), curve: Curves.easeIn);
             },
           ),
           HeaderBadge(
             icon: Icons.code_sharp,
             name: "Projects",
             onTap: () {
-              _scrollController.animateTo(
-                  MediaQuery.of(Get.context!).size.height / 2,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.easeIn);
+              Scrollable.ensureVisible(project.currentContext!,
+                  duration: const Duration(seconds: 1), curve: Curves.easeIn);
             },
           ),
           HeaderBadge(
@@ -92,9 +93,18 @@ class LargeProfilePage extends StatelessWidget {
 }
 
 class LargeBody extends StatelessWidget {
-  const LargeBody({super.key, required this.langIcons, required this.projects});
+  const LargeBody(
+      {super.key,
+      required this.langIcons,
+      required this.projects,
+      required this.overviewKey,
+      required this.repositoryKey,
+      required this.projectKey});
   final List<String> langIcons;
   final List<Project> projects;
+  final Key overviewKey;
+  final Key repositoryKey;
+  final Key projectKey;
 
   @override
   Widget build(BuildContext context) {
@@ -114,15 +124,18 @@ class LargeBody extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Readme(),
+                    Readme(
+                      key: overviewKey,
+                    ),
                     const SizedBox(
                       height: 24,
                     ),
                     Text(
                       "Pinned",
+                      key: projectKey,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    PinnedProjects(projects: projects)
+                    PinnedProjects(key: repositoryKey, projects: projects)
                   ],
                 ), // Readme
               ],
@@ -151,15 +164,15 @@ class PinnedProjects extends StatelessWidget {
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 2.8,
+            childAspectRatio: 2,
           ),
           itemCount: projects.length,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () => launch(projects[index].url),
+              onTap: () => launchUrl(Uri.parse(projects[index].url)),
               child: Container(
-                margin: EdgeInsets.all(16),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColors.borderGrey,
@@ -186,14 +199,14 @@ class PinnedProjects extends StatelessWidget {
                               builder: (BuildContext context,
                                       FollowLink? followLink) =>
                                   TextButton(
-                                    onPressed: () =>
-                                        launch(projects[index].url),
+                                    onPressed: () => launchUrl(
+                                        Uri.parse(projects[index].url)),
                                     child: Text(
                                       projects[index].name,
                                       overflow: TextOverflow.ellipsis,
                                       softWrap: true,
                                       textWidthBasis: TextWidthBasis.parent,
-                                      strutStyle: StrutStyle(
+                                      strutStyle: const StrutStyle(
                                         fontSize: 12,
                                         height: 1.5,
                                       ),
@@ -237,7 +250,7 @@ class PinnedProjects extends StatelessWidget {
                                 fit: BoxFit.contain,
 
                                 placeholderBuilder: (context) =>
-                                    CircularProgressIndicator(),
+                                    const CircularProgressIndicator(),
                               ),
                               const SizedBox(width: 10),
                               Text(
