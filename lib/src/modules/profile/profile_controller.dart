@@ -32,9 +32,6 @@ class ProfileController extends GetxController {
           -a.id.compareTo(b.id));
     this.projects.value = projects;
 
-    final lastProjects =
-        await _githubProjectsUsecase.execute(lastProjectsLimit: 5);
-
     final langIcons_ = await _langIconsUsecase.execute(projects);
     langIcons.value = langIcons_;
   }

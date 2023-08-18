@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:portifolio/src/models/github_project_model.dart';
 import 'package:portifolio/src/modules/profile/widgets/badge.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/large_header.dart';
@@ -16,12 +14,10 @@ class LargeProfilePage extends StatelessWidget {
       {super.key, required this.langIcons, required this.projects});
   final List<String> langIcons;
   final List<Project> projects;
-
   final ScrollController _scrollController = ScrollController();
-
-  var overview = GlobalKey();
-  var repository = GlobalKey();
-  var project = GlobalKey();
+  final overview = GlobalKey();
+  final repository = GlobalKey();
+  final project = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +131,13 @@ class LargeBody extends StatelessWidget {
                       key: projectKey,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    PinnedProjects(key: repositoryKey, projects: projects)
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    GestureDetector(
+                        onVerticalDragUpdate: (_) {},
+                        child: PinnedProjects(
+                            key: repositoryKey, projects: projects))
                   ],
                 ), // Readme
               ],
@@ -161,6 +163,7 @@ class PinnedProjects extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.5,
       child: GridView.builder(
+          physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -233,9 +236,7 @@ class PinnedProjects extends StatelessWidget {
                     ),
                     Text(
                       projects[index].description ?? "",
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: AppColors.lightGrey,
-                          ),
+                      style: Theme.of(context).textTheme.bodySmall,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -255,12 +256,7 @@ class PinnedProjects extends StatelessWidget {
                               const SizedBox(width: 10),
                               Text(
                                 projects[index].language,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(
-                                      color: AppColors.lightGrey,
-                                    ),
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
                           )

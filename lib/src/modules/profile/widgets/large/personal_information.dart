@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:portifolio/src/modules/profile/widgets/large/profile_picture.dart';
 import 'package:portifolio/utils/style.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PersonalInformation extends StatelessWidget {
   const PersonalInformation({
@@ -40,10 +42,19 @@ class PersonalInformation extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    Text(
-                      "JoaoRafa19",
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
+                    Link(
+                        target: LinkTarget.blank,
+                        uri: Uri.parse("https://github.com/JoaoRafa19"),
+                        builder: (context, followLink) {
+                          return TextButton(
+                            onPressed: () => launchUrl(
+                                Uri.parse("https://github.com/JoaoRafa19")),
+                            child: Text(
+                              "JoaoRafa19",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          );
+                        }),
                     const SizedBox(
                       height: 15,
                     ),
@@ -63,7 +74,7 @@ class PersonalInformation extends StatelessWidget {
                         ),
                         Text(
                           "Belo Horizonte, MG - Brazil",
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
@@ -80,10 +91,19 @@ class PersonalInformation extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          "joaopedrorafael@gmail.com",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
+                        Link(
+                            target: LinkTarget.blank,
+                            uri: Uri.parse("mailto:joaopedrorafael@gmail.com"),
+                            builder: (context, followLink) {
+                              return TextButton(
+                                onPressed: () => launchUrl(Uri.parse(
+                                    "mailto:joaopedrorafael@gmail.com")),
+                                child: Text(
+                                  "joaopedrorafael@gmail.com",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              );
+                            }),
                       ],
                     ),
                     const SizedBox(
@@ -99,9 +119,18 @@ class PersonalInformation extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          "linkedin.com/in/joaopedrorafael/",
-                          style: Theme.of(context).textTheme.bodyText1,
+                        Link(
+                          target: LinkTarget.blank,
+                          uri: Uri.parse(
+                              "https://linkedin.com/in/joaopedrorafael/"),
+                          builder: (context, followLink) => TextButton(
+                            onPressed: () => launchUrl(Uri.parse(
+                                "https://linkedin.com/in/joaopedrorafael/")),
+                            child: Text(
+                              "linkedin.com/in/joaopedrorafael/",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
                         ),
                       ],
                     ),
